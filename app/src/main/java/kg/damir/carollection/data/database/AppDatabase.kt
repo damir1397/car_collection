@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import kg.damir.carollection.data.database.model.CarDbModel
 import kg.damir.carollection.data.database.repository.CarDao
+import kg.damir.carollection.data.database.repository.UserDao
 
 @Database(
     entities = [
@@ -37,5 +38,6 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     abstract fun carDao(): CarDao
+    abstract fun userDao(): UserDao
 
 }
