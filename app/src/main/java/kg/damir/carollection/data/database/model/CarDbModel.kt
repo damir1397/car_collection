@@ -11,5 +11,6 @@ data class CarDbModel(
     val photo: String,
     val yearIssue: Date,
     val engineCapacity: String,
+    val userId:Long,
     val createDate: Date = Date()
 )
