@@ -1,44 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.AddCarFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/blue"
+            app:cardCornerRadius="40dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/setPhoto"
+            app:layout_constraintEnd_toEndOf="@+id/setPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/setPhoto">
 
-        <EditText
-            android:id="@+id/editTextBrand"
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rotation="23"
+                android:scaleType="center"
+                android:src="@drawable/clip"
+                android:contentDescription="@string/todo" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/setPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:inputType="text"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/todo" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Марка автомобиля"
-            android:inputType="text"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/setPhoto"
+            tools:layout_editor_absoluteX="16dp">
 
-        <EditText
-            android:id="@+id/editTextYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Год выпуска"
-            android:inputType="number"/>
 
-        <EditText
-            android:id="@+id/editTextEngineVolume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Объем двигателя"
-            android:inputType="numberDecimal"/>
+            <EditText
+                android:id="@+id/editTextBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Марка автомобиля"
+                android:inputType="text" />
 
-        <Button
-            android:id="@+id/buttonAddCar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Добавить автомобиль"/>
+            <EditText
+                android:id="@+id/editTextYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Год выпуска"
+                android:inputType="number" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editTextEngineVolume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Объем двигателя"
+                android:inputType="numberDecimal" />
 
+            <Button
+                android:id="@+id/buttonAddCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Добавить автомобиль" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

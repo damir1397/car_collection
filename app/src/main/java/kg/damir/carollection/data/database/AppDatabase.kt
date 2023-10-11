@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import kg.damir.carollection.data.database.model.CarDbModel
+import kg.damir.carollection.data.database.model.UsersDbModel
 import kg.damir.carollection.data.database.repository.CarDao
 import kg.damir.carollection.data.database.repository.UserDao
 
 @Database(
     entities = [
-        CarDbModel::class
-    ],version = 1, exportSchema = false
+        CarDbModel::class,
+        UsersDbModel::class
+    ], version = 2, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     companion object {

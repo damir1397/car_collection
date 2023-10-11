@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/carsListFragment">
+
+    <fragment
+        android:id="@+id/carInformationFragment"
+        android:name="kg.damir.carollection.presentation.CarInformationFragment"
+        android:label="fragment_car_information"
+        tools:layout="@layout/fragment_car_information" >
+        <action
+            android:id="@+id/action_carInformationFragment_to_carsListFragment"
+            app:destination="@id/carsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCarFragment"
+        android:name="kg.damir.carollection.presentation.AddCarFragment"
+        android:label="fragment_add_car"
+        tools:layout="@layout/fragment_add_car" >
+        <action
+            android:id="@+id/action_addCarFragment_to_carsListFragment"
+            app:destination="@id/carsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/carsListFragment"
+        android:name="kg.damir.carollection.presentation.CarsListFragment"
+        android:label="fragment_cars_list"
+        tools:layout="@layout/fragment_cars_list" >
+        <action
+            android:id="@+id/action_carsListFragment_to_addCarFragment"
+            app:destination="@id/addCarFragment" />
+        <action
+            android:id="@+id/action_carsListFragment_to_carInformationFragment"
+            app:destination="@id/carInformationFragment" />
+        <action
+            android:id="@+id/action_carsListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="kg.damir.carollection.presentation.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_carsListFragment"
+            app:destination="@id/carsListFragment" />
+    </fragment>
+</navigation>
