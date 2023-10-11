@@ -5,10 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".presentation.AddCarFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <EditText
+            android:id="@+id/editTextBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Марка автомобиля"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/editTextYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Год выпуска"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/editTextEngineVolume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Объем двигателя"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/buttonAddCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить автомобиль"/>
+
+    </LinearLayout>
 
 </FrameLayout>
