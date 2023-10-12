@@ -12,19 +12,19 @@ class CarRepositoryImpl(
 ) : CarRepository {
     private val dao = AppDatabase.getInstance(application)
 
-    override fun getCarList(): LiveData<List<CarDbModel>> {
+    override  fun getCarList(): LiveData<List<CarDbModel>> {
         return dao.carDao().getCarList()
     }
 
-    override fun addCar(carDbModel: CarDbModel) {
+    override suspend fun addCar(carDbModel: CarDbModel) {
         dao.carDao().insertCar(carDbModel)
     }
 
-    override fun editCar(carDbModel: CarDbModel) {
+    override suspend fun editCar(carDbModel: CarDbModel) {
         dao.carDao().updateCar(carDbModel)
     }
 
-    override fun deleteCar(carDbModel: CarDbModel) {
+    override suspend fun deleteCar(carDbModel: CarDbModel) {
         dao.carDao().deleteCar(carDbModel)
     }
 

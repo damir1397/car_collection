@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kg.damir.carollection.R
 import kg.damir.carollection.databinding.FragmentCarInformationBinding
 import kg.damir.carollection.databinding.FragmentCarsListBinding
@@ -26,5 +28,15 @@ class CarsListFragment : Fragment() {
         _binding = FragmentCarsListBinding.inflate(inflater, container, false)
 
         return binding.root
+
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.addCar.setOnClickListener {
+            findNavController().navigate(R.id.action_carsListFragment_to_addCarFragment)
+        }
+
+    }
+
 }

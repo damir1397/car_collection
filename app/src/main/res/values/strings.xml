@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">carСollection</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo">TODO</string>
+    <string name="error_input_car_name">Пусто название автомобиля</string>
+    <string name="error_input_photo">Выберите фотография</string>
+    <string name="error_input_year_issue">Пусто год выпуска</string>
+    <string name="error_input_engine_capacity">Пусто объем двигателя</string>
 </resources>

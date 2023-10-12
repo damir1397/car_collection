@@ -5,12 +5,12 @@ import kg.damir.carollection.data.database.model.CarDbModel
 
 interface CarRepository {
 
-    fun getCarList(): LiveData<List<CarDbModel>>
+     fun getCarList(): LiveData<List<CarDbModel>>
 
-    fun addCar(carDbModel: CarDbModel)
+    suspend fun addCar(carDbModel: CarDbModel)
 
-    fun editCar(carDbModel: CarDbModel)
+    suspend fun editCar(carDbModel: CarDbModel)
 
-    fun deleteCar(carDbModel: CarDbModel)
+    suspend fun deleteCar(carDbModel: CarDbModel)
 
 }

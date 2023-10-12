@@ -13,7 +13,7 @@ import kg.damir.carollection.data.database.repository.UserDao
     entities = [
         CarDbModel::class,
         UsersDbModel::class
-    ], version = 2, exportSchema = false
+    ], version = 3, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     companion object {

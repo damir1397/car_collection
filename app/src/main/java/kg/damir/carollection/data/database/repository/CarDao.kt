@@ -16,11 +16,11 @@ interface CarDao {
     fun getCarList(): LiveData<List<CarDbModel>>
 
     @Update
-    fun updateCar(carModel: CarDbModel)
+    suspend fun updateCar(carModel: CarDbModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCar(carModel: CarDbModel)
+    suspend fun insertCar(carModel: CarDbModel)
 
     @Delete
-    fun deleteCar(carModel: CarDbModel)
+    suspend  fun deleteCar(carModel: CarDbModel)
 }
