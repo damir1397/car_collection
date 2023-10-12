@@ -52,7 +52,6 @@ class ViewModelAdd(application: Application) : ViewModel() {
     val getCarList = getCarUseCase()
 
 
-
     fun addCar(
         inputCarName: String?,
         inputPhoto: String?,
@@ -77,12 +76,12 @@ class ViewModelAdd(application: Application) : ViewModel() {
             viewModelScope.launch {
                 addCarUseCase(
                     CarDbModel(
-                        carName,
-                        photo,
-                        yearIssue,
-                        engineCapacity,
-                        1,
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
+                        carName = carName,
+                        photo = photo,
+                        yearIssue = yearIssue,
+                        engineCapacity = engineCapacity,
+                        userId = 1,
+                        createDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
                     )
                 )
                 finishWork()
