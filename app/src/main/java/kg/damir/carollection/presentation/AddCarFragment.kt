@@ -1,16 +1,19 @@
 package kg.damir.carollection.presentation
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kg.damir.carollection.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kg.damir.carollection.databinding.FragmentAddCarBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -18,43 +21,101 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AddCarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var viewModel: ViewModelAdd
+
+    private var _binding: FragmentAddCarBinding? = null
+    private val binding: FragmentAddCarBinding
+        get() = _binding ?: throw RuntimeException("FragmentAddCarBinding == null")
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_car, container, false)
+    ): View {
+        _binding = FragmentAddCarBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewModelFactory = ViewModelFactory(requireActivity().application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[ViewModelAdd::class.java]
+        launchAddMode()
+        observeViewModel()
+    }
+
+    private fun launchAddMode() {
+        binding.buttonAddCar.setOnClickListener {
+            viewModel.addCar(
+                binding.etCarName.text.toString(),
+                PHOTO_URI,
+                binding.etYear.text.toString(),
+                binding.etEngineCapacity.text.toString(),
+            )
+        }
+        binding.choice.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Получите выбранное изображение из данных Intent и выполните необходимые действия
+            val selectedImageUri = data?.data
+            if (selectedImageUri != null) {
+                PHOTO_URI=selectedImageUri.path
+                binding.setPhoto.setImageURI(selectedImageUri)
+            }
+        }
+    }
+
+
+    private fun observeViewModel() {
+        viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_addCarFragment_to_carsListFragment)
+        }
+        viewModel.errorInputCarName.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_car_name)
+            } else {
+                null
+            }
+            binding.etCarName.error = message
+        }
+        viewModel.errorInputYearIssue.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_year_issue)
+            } else {
+                null
+            }
+            binding.etYear.error = message
+        }
+
+        viewModel.errorInputEngineCapacity.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_engine_capacity)
+            } else {
+                null
+            }
+            binding.etEngineCapacity.error = message
+        }
+        viewModel.errorInputEngineCapacity.observe(viewLifecycleOwner) {
+            val message = if (it) {
+                getString(R.string.error_input_photo)
+            } else {
+                null
+            }
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddCarFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddCarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        const val PICK_IMAGE_REQUEST_CODE = 1
+        var PHOTO_URI: String? = null
     }
 }
