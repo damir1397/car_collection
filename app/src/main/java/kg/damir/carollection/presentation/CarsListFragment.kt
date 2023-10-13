@@ -1,18 +1,18 @@
 package kg.damir.carollection.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kg.damir.carollection.R
-import kg.damir.carollection.databinding.FragmentCarInformationBinding
 import kg.damir.carollection.databinding.FragmentCarsListBinding
+import kg.damir.carollection.presentation.adapter.CarListAdapter
+import kg.damir.carollection.presentation.factory.ViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -24,7 +24,8 @@ class CarsListFragment : Fragment() {
     private val binding: FragmentCarsListBinding
         get() = _binding ?: throw RuntimeException("FragmentCarsListBinding")
     private lateinit var viewModel: ViewModelAdd
-    private val carListAdapter = CarListAdapter(requireContext())
+
+    private val carListAdapter = CarListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,21 +42,36 @@ class CarsListFragment : Fragment() {
             findNavController().navigate(R.id.action_carsListFragment_to_addCarFragment)
         }
         initCarAdapter()
+
         val viewModelFactory = ViewModelFactory(requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModelAdd::class.java]
 
-        viewModel.getCarList.observe(viewLifecycleOwner) {
+        viewModel.getCarList.observe(viewLifecycleOwner) { searchResults ->
+            carListAdapter.submitList(searchResults)
+        }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchDatabase(newText.orEmpty())
+                return true
+            }
+        })
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+        viewModel.searchDatabase(searchQuery)
+
+        viewModel.searchDatabase(searchQuery).observe(this) {
             carListAdapter.submitList(it)
         }
     }
-
-
     private fun initCarAdapter() {
         val recycleViewMenu = binding.carRecycleView
-        recycleViewMenu.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
         recycleViewMenu.adapter = carListAdapter
     }
-
-
 }

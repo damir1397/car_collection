@@ -1,4 +1,4 @@
-package kg.damir.carollection.presentation
+package kg.damir.carollection.presentation.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import kg.damir.carollection.data.database.model.CarDbModel
 import kg.damir.carollection.databinding.CarItemBinding
+import kg.damir.carollection.presentation.diff_callback.CarItemDiffCallback
+import kg.damir.carollection.presentation.holder.CarItemViewHolder
 
 
-class CarListAdapter(val context: Context) : ListAdapter<CarDbModel, CarItemViewHolder>(
+class CarListAdapter() : ListAdapter<CarDbModel, CarItemViewHolder>(
     CarItemDiffCallback()
 ) {
     private val TAG = this.javaClass.name
@@ -31,7 +33,7 @@ class CarListAdapter(val context: Context) : ListAdapter<CarDbModel, CarItemView
         val item = getItem(position)
         with(holder) {
 
-            binding.setPhoto.setImageURI(Uri.parse(item.photo))
+            binding.setPhoto.loadImage(item.photo)
             binding.carName.text= item.carName
             binding.yearIssue.text =item.yearIssue
             binding.engineCapacity.text =item.engineCapacity

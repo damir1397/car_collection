@@ -1,4 +1,4 @@
-package kg.damir.carollection.presentation
+package kg.damir.carollection.presentation.diff_callback
 
 import androidx.recyclerview.widget.DiffUtil
 import kg.damir.carollection.data.database.model.CarDbModel

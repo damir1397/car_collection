@@ -1,4 +1,4 @@
-package kg.damir.carollection.presentation
+package kg.damir.carollection.presentation.holder
 
 import androidx.recyclerview.widget.RecyclerView
 import kg.damir.carollection.databinding.CarItemBinding

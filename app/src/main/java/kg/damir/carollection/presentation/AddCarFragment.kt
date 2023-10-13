@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kg.damir.carollection.R
 import kg.damir.carollection.databinding.FragmentAddCarBinding
+import kg.damir.carollection.presentation.factory.ViewModelFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -67,7 +67,7 @@ class AddCarFragment : Fragment() {
             // Получите выбранное изображение из данных Intent и выполните необходимые действия
             val selectedImageUri = data?.data
             if (selectedImageUri != null) {
-                PHOTO_URI=selectedImageUri.path
+                PHOTO_URI=selectedImageUri.toString()
                 binding.setPhoto.setImageURI(selectedImageUri)
             }
         }
@@ -103,7 +103,7 @@ class AddCarFragment : Fragment() {
             }
             binding.etEngineCapacity.error = message
         }
-        viewModel.errorInputEngineCapacity.observe(viewLifecycleOwner) {
+        viewModel.errorInputPhoto.observe(viewLifecycleOwner) {
             val message = if (it) {
                 getString(R.string.error_input_photo)
             } else {
@@ -118,4 +118,5 @@ class AddCarFragment : Fragment() {
         const val PICK_IMAGE_REQUEST_CODE = 1
         var PHOTO_URI: String? = null
     }
+
 }
