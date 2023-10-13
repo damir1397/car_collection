@@ -5,10 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 data class UsersDbModel(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     val login: String,
     val password: String,
     val viewCount: Long,
     val downloadCount: Long,
-    val isSubscribed: Boolean
+    val isSubscribed: Boolean =  false
 )

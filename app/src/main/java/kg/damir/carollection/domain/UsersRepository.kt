@@ -7,11 +7,12 @@ import kg.damir.carollection.data.database.model.UsersDbModel
 interface UsersRepository {
 
     fun getUsersList(): LiveData<List<UsersDbModel>>
+    fun getUsersByLogin(login: String): LiveData<UsersDbModel>
 
-    fun addUsers(user: UsersDbModel)
+    suspend fun addUsers(user: UsersDbModel)
 
-    fun editUsers(user: UsersDbModel)
+    suspend fun editUsers(user: UsersDbModel)
 
-    fun deleteUsers(user: UsersDbModel)
+    suspend fun deleteUsers(user: UsersDbModel)
 
 }

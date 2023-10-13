@@ -3,27 +3,34 @@ package kg.damir.carollection.presentation
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kg.damir.carollection.data.database.model.CarDbModel
+import kg.damir.carollection.data.database.model.UsersDbModel
 import kg.damir.carollection.data.repository.CarRepositoryImpl
+import kg.damir.carollection.data.repository.UsersRepositoryImpl
 import kg.damir.carollection.domain.AddCarUseCase
+import kg.damir.carollection.domain.AddUsersUseCase
 import kg.damir.carollection.domain.DeleteCarUseCase
 import kg.damir.carollection.domain.EditCarUseCase
 import kg.damir.carollection.domain.GetCarUseCase
-import kotlinx.coroutines.Job
+import kg.damir.carollection.domain.GetUsersByLoginUseCase
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.coroutines.CoroutineContext
 
 class ViewModelAdd(application: Application) : ViewModel() {
 
     private val repository = CarRepositoryImpl(application)
+    private val repositoryUser = UsersRepositoryImpl(application)
+
     val getCarUseCase = GetCarUseCase(repository)
     val editCarUseCase = EditCarUseCase(repository)
     val deleteCarUseCase = DeleteCarUseCase(repository)
     val addCarUseCase = AddCarUseCase(repository)
+    val getUsersByLoginUseCase = GetUsersByLoginUseCase(repositoryUser)
+    val addUsersUseCase = AddUsersUseCase(repositoryUser)
 
     private val _errorInputCarName = MutableLiveData<Boolean>()
     val errorInputCarName: LiveData<Boolean>
@@ -45,12 +52,12 @@ class ViewModelAdd(application: Application) : ViewModel() {
     val shouldCloseScreen: LiveData<Unit>
         get() = _shouldCloseScreen
 
-//    val editCar = editCarUseCase()
-//    val deleteCar = deleteCarUseCase()
+    var getCarList = getCarUseCase()
 
 
-    val getCarList = getCarUseCase()
-
+    fun searchDatabase(searchQuery: String): LiveData<List<CarDbModel>> {
+        return getCarUseCase(searchQuery)
+    }
 
 
     fun addCar(
@@ -77,12 +84,12 @@ class ViewModelAdd(application: Application) : ViewModel() {
             viewModelScope.launch {
                 addCarUseCase(
                     CarDbModel(
-                        carName,
-                        photo,
-                        yearIssue,
-                        engineCapacity,
-                        1,
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
+                        carName = carName,
+                        photo = photo,
+                        yearIssue = yearIssue,
+                        engineCapacity = engineCapacity,
+                        userId = 1,
+                        createDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
                     )
                 )
                 finishWork()
@@ -134,4 +141,23 @@ class ViewModelAdd(application: Application) : ViewModel() {
     private fun finishWork() {
         _shouldCloseScreen.value = Unit
     }
+
+    val getUsers = repositoryUser.getUsersList()
+    fun getUsersByLogin(login: String): UsersDbModel? {
+        return getUsersByLoginUseCase(login).value
+    }
+
+    fun addDefaultUser() {
+        viewModelScope.launch {
+            addUsersUseCase(
+                UsersDbModel(
+                    login = "UserCar",
+                    password = "1234",
+                    downloadCount = 2,
+                    viewCount = 3
+                )
+            )
+        }
+    }
+
 }

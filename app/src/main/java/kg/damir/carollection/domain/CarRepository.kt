@@ -5,7 +5,8 @@ import kg.damir.carollection.data.database.model.CarDbModel
 
 interface CarRepository {
 
-     fun getCarList(): LiveData<List<CarDbModel>>
+    fun getCarList(text: String): LiveData<List<CarDbModel>>
+    fun getCarList(): LiveData<List<CarDbModel>>
 
     suspend fun addCar(carDbModel: CarDbModel)
 
