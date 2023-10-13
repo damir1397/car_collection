@@ -14,19 +14,22 @@ class UsersRepositoryImpl(
 ) : UsersRepository {
     private val dao = AppDatabase.getInstance(application).userDao()
 
-    override fun getUsersList(): LiveData<List<UsersDbModel>> {
+    override  fun getUsersList(): LiveData<List<UsersDbModel>> {
         return dao.getUsersList()
     }
+    override fun getUsersByLogin(login:String): LiveData<UsersDbModel> {
+        return dao.getUsersByLogin(login)
+    }
 
-    override fun addUsers(user: UsersDbModel) {
+    override suspend fun addUsers(user: UsersDbModel) {
         dao.insertUsers(user)
     }
 
-    override fun editUsers(user: UsersDbModel) {
+    override suspend fun editUsers(user: UsersDbModel) {
         dao.updateUsers(user)
     }
 
-    override fun deleteUsers(user: UsersDbModel) {
+    override suspend fun deleteUsers(user: UsersDbModel) {
         dao.deleteUsers(user)
     }
 }

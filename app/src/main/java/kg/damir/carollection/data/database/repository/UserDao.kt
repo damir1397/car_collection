@@ -16,12 +16,15 @@ interface UserDao {
     @Query("SELECT * FROM users ")
     fun getUsersList(): LiveData<List<UsersDbModel>>
 
+    @Query("SELECT * FROM users where login = :login ")
+    fun getUsersByLogin(login: String): LiveData<UsersDbModel>
+
     @Update
-    fun updateUsers(user: UsersDbModel)
+    suspend fun updateUsers(user: UsersDbModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUsers(user: UsersDbModel)
+    suspend fun insertUsers(user: UsersDbModel)
 
     @Delete
-    fun deleteUsers(user: UsersDbModel)
+    suspend fun deleteUsers(user: UsersDbModel)
 }

@@ -7,7 +7,7 @@ import java.util.Date
 @Entity(tableName = "car")
 data class CarDbModel(
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null,
+    var id: Int? = 0,
     val carName: String,
     val photo: String,
     val yearIssue: String,

@@ -1,4 +1,4 @@
-package kg.damir.carollection.presentation.holder
+package kg.damir.carollection.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

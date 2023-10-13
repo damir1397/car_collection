@@ -38,6 +38,7 @@ class CarsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.addCar.setOnClickListener {
             findNavController().navigate(R.id.action_carsListFragment_to_addCarFragment)
         }
@@ -45,11 +46,14 @@ class CarsListFragment : Fragment() {
 
         val viewModelFactory = ViewModelFactory(requireActivity().application)
         viewModel = ViewModelProvider(this, viewModelFactory)[ViewModelAdd::class.java]
-
+        val usersByLogin = viewModel.getUsersByLogin("UserCar")
+        if ((usersByLogin?.id ?: 0) <= 0){
+            viewModel.addDefaultUser()
+        }
         viewModel.getCarList.observe(viewLifecycleOwner) { searchResults ->
             carListAdapter.submitList(searchResults)
         }
-
+        binding.searchView.isIconified = false
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true

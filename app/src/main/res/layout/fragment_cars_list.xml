@@ -18,6 +18,7 @@
             android:layout_height="50dp"
             app:iconifiedByDefault="true"
             app:layout_constraintEnd_toEndOf="parent"
+            android:queryHint="@string/search_car"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
